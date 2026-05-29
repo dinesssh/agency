@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IronForge Gym | Transform Your Body, Transform Your Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#000;--card:#0c0c0c;--card2:#111;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);
+    --accent:#00e676;--accent2:#00c853;--accentDim:rgba(0,230,118,0.08);
+    --muted:rgba(255,255,255,0.5);--muted2:rgba(255,255,255,0.3);--white:#fff;
+  }
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--white);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:rgba(0,230,118,0.25);color:#fff}
+  a{text-decoration:none;color:inherit}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  .fd{font-family:'Space Grotesk',sans-serif}
+  .gt{background:linear-gradient(135deg,#00e676,#69f0ae);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+  /* ————— NAV ————— */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:all 0.4s}
+  nav.scrolled{background:rgba(0,0,0,0.7);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border-bottom:1px solid var(--border)}
+  .nav-in{max-width:1200px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between}
+  .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.3px}
+  .nav-logo span{color:var(--accent)}
+  .nav-links{display:flex;align-items:center;gap:36px}
+  .nav-links a{font-size:13px;color:var(--muted);font-weight:500;transition:color 0.3s;letter-spacing:-0.2px}
+  .nav-links a:hover{color:var(--white)}
+  .nav-cta{background:var(--white)!important;color:#000!important;font-weight:700!important;padding:10px 24px;border-radius:980px;font-size:13px;transition:all 0.3s}
+  .nav-cta:hover{opacity:0.85;transform:scale(1.02)}
+  @media(max-width:768px){.nav-links{display:none}}
+
+  /* ————— HERO ————— */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 40px 80px;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0.35}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0.7) 50%,#000 100%)}
+  .hero-content{position:relative;z-index:2;max-width:900px}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--accent);font-weight:600;letter-spacing:0.5px;margin-bottom:28px}
+  .hero-eyebrow .dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  .hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(44px,7vw,88px);font-weight:700;letter-spacing:-3px;line-height:1.02;margin-bottom:24px}
+  .hero p{color:var(--muted);font-size:19px;line-height:1.65;max-width:560px;margin:0 auto 44px;font-weight:400;letter-spacing:-0.2px}
+  .hero-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .btn-w{background:var(--white);color:#000;font-weight:700;padding:16px 40px;border-radius:980px;font-size:15px;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s;letter-spacing:-0.2px}
+  .btn-w:hover{opacity:0.85;transform:scale(1.02)}
+  .btn-ghost{color:var(--white);font-weight:600;padding:16px 40px;border-radius:980px;font-size:15px;transition:all 0.3s;border:1.5px solid rgba(255,255,255,0.15);letter-spacing:-0.2px}
+  .btn-ghost:hover{border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.04)}
+
+  /* Stats row */
+  .stats-row{display:flex;justify-content:center;gap:0;margin-top:80px;border:1px solid var(--border);border-radius:20px;overflow:hidden;background:rgba(255,255,255,0.02);backdrop-filter:blur(20px)}
+  .stat-item{flex:1;padding:32px 24px;text-align:center;border-right:1px solid var(--border);transition:background 0.3s}
+  .stat-item:last-child{border-right:none}
+  .stat-item:hover{background:rgba(255,255,255,0.03)}
+  .stat-num{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;letter-spacing:-1.5px;margin-bottom:4px}
+  .stat-label{font-size:13px;color:var(--muted);font-weight:500;letter-spacing:-0.1px}
+  @media(max-width:600px){.stats-row{flex-wrap:wrap}.stat-item{flex:1 1 50%;border-right:none;border-bottom:1px solid var(--border)}.stat-item:nth-child(odd){border-right:1px solid var(--border)}}
+
+  /* ————— SECTION ————— */
+  .sec{padding:120px 40px}
+  .sec-in{max-width:1200px;margin:0 auto}
+  .sec-tag{color:var(--accent);font-size:13px;font-weight:600;letter-spacing:0.5px;text-align:center;margin-bottom:12px}
+  .sec-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4.5vw,56px);font-weight:700;letter-spacing:-2px;text-align:center;line-height:1.05;margin-bottom:16px}
+  .sec-sub{color:var(--muted);font-size:17px;text-align:center;max-width:500px;margin:0 auto 72px;letter-spacing:-0.2px;line-height:1.6}
+
+  /* ————— PROGRAMS (Apple Product Grid) ————— */
+  .prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:900px){.prog-grid{grid-template-columns:1fr}}
+  .prog-card{border-radius:24px;overflow:hidden;position:relative;background:var(--card);transition:transform 0.5s cubic-bezier(.25,.46,.45,.94)}
+  .prog-card:hover{transform:scale(1.02)}
+  .prog-img{height:320px;position:relative;overflow:hidden}
+  .prog-img img{transition:transform 0.6s cubic-bezier(.25,.46,.45,.94)}
+  .prog-card:hover .prog-img img{transform:scale(1.06)}
+  .prog-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.9) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:32px}
+  .prog-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+  .ptag-green{color:var(--accent)}
+  .ptag-orange{color:#ff9100}
+  .ptag-blue{color:#448aff}
+  .prog-overlay h3{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;letter-spacing:-0.5px;margin-bottom:6px}
+  .prog-overlay p{color:var(--muted);font-size:14px;line-height:1.5;max-width:280px}
+  .prog-price-tag{position:absolute;top:20px;right:20px;background:rgba(0,0,0,0.5);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.1);border-radius:980px;padding:8px 20px;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700}
+
+  /* Program details row */
+  .prog-details{padding:28px 32px;display:flex;flex-direction:column;gap:12px}
+  .pd-item{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);font-weight:500}
+  .pd-item svg{width:16px;height:16px;color:var(--accent);flex-shrink:0}
+
+  /* ————— FEATURES (Apple-style centered) ————— */
+  .feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:24px;overflow:hidden;margin-top:96px}
+  @media(max-width:768px){.feat-grid{grid-template-columns:repeat(2,1fr)}}
+  .feat-card{background:var(--card);padding:48px 28px;text-align:center;transition:background 0.3s}
+  .feat-card:hover{background:var(--card2)}
+  .feat-icon{width:48px;height:48px;margin:0 auto 16px;background:var(--accentDim);border-radius:16px;display:flex;align-items:center;justify-content:center}
+  .feat-icon svg{width:22px;height:22px;color:var(--accent)}
+  .feat-card h4{font-size:15px;font-weight:700;margin-bottom:6px;letter-spacing:-0.2px}
+  .feat-card p{font-size:13px;color:var(--muted);line-height:1.5}
+
+  /* ————— FULL-WIDTH IMAGE SECTION ————— */
+  .img-section{position:relative;height:70vh;min-height:500px;overflow:hidden}
+  .img-section img{width:100%;height:100%;object-fit:cover}
+  .img-section::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.8) 0%,transparent 60%)}
+  .img-section-content{position:absolute;top:50%;left:0;transform:translateY(-50%);padding:0 80px;z-index:2;max-width:550px}
+  .img-section-content h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:700;letter-spacing:-1.5px;line-height:1.08;margin-bottom:16px}
+  .img-section-content p{color:var(--muted);font-size:16px;line-height:1.7;margin-bottom:28px}
+  @media(max-width:768px){.img-section-content{padding:0 40px;max-width:100%}}
+
+  /* ————— TRAINERS ————— */
+  .trainer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:768px){.trainer-grid{grid-template-columns:1fr}}
+  .trainer-card{border-radius:24px;overflow:hidden;background:var(--card);transition:transform 0.5s cubic-bezier(.25,.46,.45,.94)}
+  .trainer-card:hover{transform:scale(1.02)}
+  .trainer-img{height:340px;overflow:hidden;position:relative}
+  .trainer-img img{transition:transform 0.6s cubic-bezier(.25,.46,.45,.94)}
+  .trainer-card:hover .trainer-img img{transform:scale(1.05)}
+  .trainer-info{padding:28px 28px 32px;text-align:center}
+  .trainer-info h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.3px;margin-bottom:4px}
+  .trainer-role{color:var(--accent);font-size:12px;font-weight:600;letter-spacing:0.5px;margin-bottom:12px}
+  .trainer-info p{color:var(--muted);font-size:13px;line-height:1.6}
+
+  /* ————— SCHEDULE ————— */
+  .sched-wrap{border-radius:24px;overflow:hidden;border:1px solid var(--border);background:var(--card)}
+  .sched-header{display:grid;grid-template-columns:100px repeat(6,1fr);border-bottom:1px solid var(--border)}
+  .sched-header div{padding:16px 8px;font-size:12px;font-weight:700;color:var(--muted2);text-align:center;letter-spacing:0.5px}
+  .sched-row{display:grid;grid-template-columns:100px repeat(6,1fr);border-bottom:1px solid var(--border)}
+  .sched-row:last-child{border-bottom:none}
+  .sched-time{padding:18px 8px;font-size:13px;font-weight:700;color:var(--muted);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--border)}
+  .sched-cell{padding:12px 6px;display:flex;align-items:center;justify-content:center}
+  .sc{font-size:11px;font-weight:600;padding:6px 14px;border-radius:980px;text-align:center}
+  .sc-g{background:rgba(0,230,118,0.08);color:var(--accent)}
+  .sc-o{background:rgba(255,145,0,0.08);color:#ff9100}
+  .sc-b{background:rgba(68,138,255,0.08);color:#448aff}
+  .sc-r{background:rgba(255,61,61,0.08);color:#ff6b6b}
+  @media(max-width:768px){.sched-wrap{overflow-x:auto}.sched-header,.sched-row{min-width:680px}}
+
+  /* ————— PRICING ————— */
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:768px){.price-grid{grid-template-columns:1fr}}
+  .price-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 32px;display:flex;flex-direction:column;position:relative;transition:all 0.4s cubic-bezier(.25,.46,.45,.94)}
+  .price-card:hover{transform:translateY(-6px);border-color:var(--border2)}
+  .price-card.pop{border-color:var(--accent);background:linear-gradient(180deg,rgba(0,230,118,0.03) 0%,var(--card) 100%)}
+  .pop-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#000;font-size:11px;font-weight:800;padding:5px 20px;border-radius:980px;letter-spacing:0.3px}
+  .price-card h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px;letter-spacing:-0.3px}
+  .price-desc{color:var(--muted);font-size:14px;margin-bottom:28px}
+  .price-amt{font-family:'Space Grotesk',sans-serif;font-size:52px;font-weight:700;letter-spacing:-3px;margin-bottom:4px}
+  .price-per{color:var(--muted2);font-size:14px;margin-bottom:32px}
+  .price-feats{display:flex;flex-direction:column;gap:14px;margin-bottom:36px;flex:1}
+  .pf-item{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted);font-weight:500}
+  .pf-item svg{width:18px;height:18px;color:var(--accent);flex-shrink:0}
+  .price-btn{display:block;text-align:center;font-weight:700;font-size:15px;padding:16px;border-radius:980px;transition:all 0.3s;letter-spacing:-0.2px}
+  .pb-w{background:var(--white);color:#000}.pb-w:hover{opacity:0.85}
+  .pb-o{background:rgba(255,255,255,0.06);color:var(--white);border:1px solid var(--border)}.pb-o:hover{background:rgba(255,255,255,0.1)}
+
+  /* ————— TESTIMONIALS ————— */
+  .testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:768px){.testi-grid{grid-template-columns:1fr}}
+  .testi-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px;transition:all 0.3s}
+  .testi-card:hover{border-color:var(--border2)}
+  .testi-stars{display:flex;gap:2px;margin-bottom:20px}
+  .testi-stars svg{width:14px;height:14px;fill:var(--accent);stroke:none}
+  .testi-card blockquote{color:rgba(255,255,255,0.7);font-size:15px;line-height:1.7;margin-bottom:24px;letter-spacing:-0.2px}
+  .testi-author{display:flex;align-items:center;gap:14px}
+  .testi-ava{width:44px;height:44px;border-radius:50%;overflow:hidden;background:var(--accentDim);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:16px}
+  .testi-name{font-size:14px;font-weight:700;letter-spacing:-0.2px}
+  .testi-sub{font-size:12px;color:var(--muted)}
+
+  /* ————— CTA ————— */
+  .cta-section{position:relative;padding:160px 40px;text-align:center;overflow:hidden}
+  .cta-bg{position:absolute;inset:0}
+  .cta-bg img{width:100%;height:100%;object-fit:cover;opacity:0.2}
+  .cta-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,0.5) 0%,#000 80%)}
+  .cta-content{position:relative;z-index:2;max-width:700px;margin:0 auto}
+  .cta-content h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.05;margin-bottom:20px}
+  .cta-content p{color:var(--muted);font-size:18px;line-height:1.6;margin-bottom:44px;max-width:480px;margin-left:auto;margin-right:auto}
+  .cta-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+  .cta-info{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+  .cta-info div{display:flex;align-items:center;gap:8px}
+  .cta-info svg{width:16px;height:16px}
+
+  /* ————— FOOTER ————— */
+  footer{border-top:1px solid var(--border);padding:28px 40px}
+  .foot-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot-logo{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700}
+  .foot-logo span{color:var(--accent)}
+  .foot-copy{color:var(--muted2);font-size:12px}
+  .foot-links{display:flex;gap:20px}
+  .foot-links a{color:var(--muted);font-size:13px;transition:color 0.3s}
+  .foot-links a:hover{color:var(--white)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-in">
+    <a href="#" class="nav-logo fd">IRON<span>FORGE</span></a>
+    <div class="nav-links">
+      <a href="#programs">Programs</a>
+      <a href="#trainers">Trainers</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact" class="nav-cta">Join Now</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80" alt="Gym interior">
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="dot"></span> Now Open — Free Trial Available</div>
+    <h1 class="fd">Transform<br>your body.</h1>
+    <p>Madurai's premium fitness studio. Expert trainers, world-class equipment, and programs designed for real results.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-w">Start Free Trial →</a>
+      <a href="#programs" class="btn-ghost">View Programs</a>
+    </div>
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num fd">500+</div>
+        <div class="stat-label">Active Members</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num fd">15+</div>
+        <div class="stat-label">Expert Trainers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num fd">98%</div>
+        <div class="stat-label">Retention Rate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num fd">5 AM</div>
+        <div class="stat-label">to 10 PM Daily</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section id="programs" class="sec">
+  <div class="sec-in">
+    <div class="sec-tag">Programs</div>
+    <h2 class="sec-title fd">Built for <span class="gt">real results.</span></h2>
+    <p class="sec-sub">Every program is designed by certified trainers. Pick what fits your goal.</p>
+
+    <div class="prog-grid">
+      <!-- Card 1 -->
+      <div class="prog-card">
+        <div class="prog-img">
+          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80" alt="Weight Training">
+          <div class="prog-overlay">
+            <div class="prog-tag ptag-green">Strength</div>
+            <h3 class="fd">Weight Training</h3>
+            <p>Build muscle, gain strength, sculpt your physique.</p>
+          </div>
+          <div class="prog-price-tag">₹2,500<span style="font-size:11px;color:var(--muted)">/mo</span></div>
+        </div>
+        <div class="prog-details">
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Personalised workout plans</div>
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Form correction by trainer</div>
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Progressive overload tracking</div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="prog-card">
+        <div class="prog-img">
+          <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80" alt="HIIT Training">
+          <div class="prog-overlay">
+            <div class="prog-tag ptag-orange">Cardio</div>
+            <h3 class="fd">HIIT & Functional</h3>
+            <p>Burn fat fast with high-intensity circuits.</p>
+          </div>
+          <div class="prog-price-tag">₹3,000<span style="font-size:11px;color:var(--muted)">/mo</span></div>
+        </div>
+        <div class="prog-details">
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Group sessions (max 15)</div>
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Heart rate zone training</div>
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Burn 500–800 cal per session</div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="prog-card">
+        <div class="prog-img">
+          <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80" alt="Personal Training">
+          <div class="prog-overlay">
+            <div class="prog-tag ptag-blue">Premium</div>
+            <h3 class="fd">Personal Training</h3>
+            <p>1-on-1 coaching with a dedicated trainer.</p>
+          </div>
+          <div class="prog-price-tag">₹5,000<span style="font-size:11px;color:var(--muted)">/mo</span></div>
+        </div>
+        <div class="prog-details">
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Dedicated personal trainer</div>
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Custom diet plan included</div>
+          <div class="pd-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Weekly body composition check</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Grid -->
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5h11M2 12h2m16 0h2M6.5 17.5h11"/></svg></div>
+        <h4>Premium Equipment</h4>
+        <p>Imported machines & free weights</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h4>AC Studio</h4>
+        <p>Fully air-conditioned facility</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h4>Expert Trainers</h4>
+        <p>Certified & experienced coaches</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <h4>Flexible Timings</h4>
+        <p>5 AM to 10 PM — 7 days a week</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL WIDTH IMAGE BREAK -->
+<section class="img-section">
+  <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=1920&q=80" alt="Gym equipment">
+  <div class="img-section-content">
+    <h2 class="fd">Where discipline<br>meets <span class="gt">results.</span></h2>
+    <p>5,000 sq ft of premium training space. Every machine, every weight, every corner is designed for your transformation.</p>
+    <a href="#contact" class="btn-w">Book a Tour →</a>
+  </div>
+</section>
+
+<!-- TRAINERS -->
+<section id="trainers" class="sec">
+  <div class="sec-in">
+    <div class="sec-tag">Our Team</div>
+    <h2 class="sec-title fd">Meet your <span class="gt">trainers.</span></h2>
+    <p class="sec-sub">Certified professionals who are passionate about your transformation.</p>
+    <div class="trainer-grid">
+      <div class="trainer-card">
+        <div class="trainer-img">
+          <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=800&q=80" alt="Trainer">
+        </div>
+        <div class="trainer-info">
+          <h3 class="fd">Arun Kumar</h3>
+          <div class="trainer-role">Strength & Conditioning</div>
+          <p>10+ years experience. ACE certified. Specialises in body transformation and powerlifting.</p>
+        </div>
+      </div>
+      <div class="trainer-card">
+        <div class="trainer-img">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=800&q=80" alt="Trainer">
+        </div>
+        <div class="trainer-info">
+          <h3 class="fd">Priya Sharma</h3>
+          <div class="trainer-role">HIIT & Functional Training</div>
+          <p>CrossFit Level 2 certified. Expert in fat loss, functional fitness, and group training.</p>
+        </div>
+      </div>
+      <div class="trainer-card">
+        <div class="trainer-img">
+          <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=800&q=80" alt="Trainer">
+        </div>
+        <div class="trainer-info">
+          <h3 class="fd">Karthik R</h3>
+          <div class="trainer-role">Nutrition & Recovery</div>
+          <p>Sports nutritionist. Creates custom diet plans and guides on supplements & recovery.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule" class="sec" style="background:var(--card2)">
+  <div class="sec-in">
+    <div class="sec-tag">Schedule</div>
+    <h2 class="sec-title fd">Weekly class <span class="gt">schedule.</span></h2>
+    <p class="sec-sub">All classes included in Pro & Elite memberships.</p>
+    <div class="sched-wrap">
+      <div class="sched-header">
+        <div></div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-time">6 AM</div>
+        <div class="sched-cell"><span class="sc sc-g">HIIT</span></div>
+        <div class="sched-cell"><span class="sc sc-o">Strength</span></div>
+        <div class="sched-cell"><span class="sc sc-g">HIIT</span></div>
+        <div class="sched-cell"><span class="sc sc-o">Strength</span></div>
+        <div class="sched-cell"><span class="sc sc-g">HIIT</span></div>
+        <div class="sched-cell"><span class="sc sc-b">Yoga</span></div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-time">8 AM</div>
+        <div class="sched-cell"><span class="sc sc-b">Yoga</span></div>
+        <div class="sched-cell"><span class="sc sc-g">Functional</span></div>
+        <div class="sched-cell"><span class="sc sc-b">Yoga</span></div>
+        <div class="sched-cell"><span class="sc sc-g">Functional</span></div>
+        <div class="sched-cell"><span class="sc sc-b">Yoga</span></div>
+        <div class="sched-cell"><span class="sc sc-r">CrossFit</span></div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-time">5 PM</div>
+        <div class="sched-cell"><span class="sc sc-r">CrossFit</span></div>
+        <div class="sched-cell"><span class="sc sc-g">HIIT</span></div>
+        <div class="sched-cell"><span class="sc sc-r">CrossFit</span></div>
+        <div class="sched-cell"><span class="sc sc-g">HIIT</span></div>
+        <div class="sched-cell"><span class="sc sc-r">CrossFit</span></div>
+        <div class="sched-cell"><span class="sc sc-o">Strength</span></div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-time">7 PM</div>
+        <div class="sched-cell"><span class="sc sc-o">Strength</span></div>
+        <div class="sched-cell"><span class="sc sc-r">CrossFit</span></div>
+        <div class="sched-cell"><span class="sc sc-o">Strength</span></div>
+        <div class="sched-cell"><span class="sc sc-r">CrossFit</span></div>
+        <div class="sched-cell"><span class="sc sc-o">Strength</span></div>
+        <div class="sched-cell"><span class="sc sc-g">Open Gym</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="sec">
+  <div class="sec-in">
+    <div class="sec-tag">Pricing</div>
+    <h2 class="sec-title fd">Simple, honest <span class="gt">pricing.</span></h2>
+    <p class="sec-sub">No joining fee. No hidden charges. Cancel anytime.</p>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3 class="fd">Basic</h3>
+        <p class="price-desc">Gym access with basic guidance.</p>
+        <div class="price-amt fd">₹1,500</div>
+        <div class="price-per">per month</div>
+        <div class="price-feats">
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Full gym access</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Locker & changing room</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Basic workout guidance</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> 5 AM – 10 PM access</div>
+        </div>
+        <a href="#contact" class="price-btn pb-o">Get Started</a>
+      </div>
+      <div class="price-card pop">
+        <div class="pop-badge">Most Popular</div>
+        <h3 class="fd">Pro</h3>
+        <p class="price-desc">Everything + classes & diet plan.</p>
+        <div class="price-amt fd">₹3,000</div>
+        <div class="price-per">per month</div>
+        <div class="price-feats">
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Basic</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> All group classes</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Custom diet plan</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Monthly body assessment</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> WhatsApp support group</div>
+        </div>
+        <a href="#contact" class="price-btn pb-w">Get Started</a>
+      </div>
+      <div class="price-card">
+        <h3 class="fd">Elite</h3>
+        <p class="price-desc">1-on-1 personal training + everything.</p>
+        <div class="price-amt fd">₹5,000</div>
+        <div class="price-per">per month</div>
+        <div class="price-feats">
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Everything in Pro</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Dedicated personal trainer</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Weekly progress photos</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Supplement guidance</div>
+          <div class="pf-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Priority 1-on-1 slots</div>
+        </div>
+        <a href="#contact" class="price-btn pb-o">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reviews" class="sec" style="background:var(--card2)">
+  <div class="sec-in">
+    <div class="sec-tag">Reviews</div>
+    <h2 class="sec-title fd">What members <span class="gt">say.</span></h2>
+    <p class="sec-sub"></p>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <blockquote>"Lost 12 kgs in 3 months with the Pro plan. The trainers actually care about your progress. Best gym in Madurai — hands down."</blockquote>
+        <div class="testi-author">
+          <div class="testi-ava">R</div>
+          <div><div class="testi-name">Rajesh M.</div><div class="testi-sub">Lost 12kg in 3 months</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <blockquote>"The HIIT classes are incredible. The energy is unmatched and the results speak for themselves. I feel stronger and more confident than ever."</blockquote>
+        <div class="testi-author">
+          <div class="testi-ava">S</div>
+          <div><div class="testi-name">Sanjana K.</div><div class="testi-sub">Pro member — 8 months</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <blockquote>"Personal training here is worth every rupee. My trainer pushed me beyond what I thought was possible. Gained 8kg muscle in 4 months!"</blockquote>
+        <div class="testi-author">
+          <div class="testi-ava">V</div>
+          <div><div class="testi-name">Vikram S.</div><div class="testi-sub">Elite member — 1 year</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <blockquote>"As a woman, I was intimidated by gyms. IronForge made me feel welcome from day one. The women's batch is amazing!"</blockquote>
+        <div class="testi-author">
+          <div class="testi-ava">D</div>
+          <div><div class="testi-name">Deepika R.</div><div class="testi-sub">Pro member — 6 months</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="cta-section">
+  <div class="cta-bg">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1920&q=80" alt="Gym">
+  </div>
+  <div class="cta-content">
+    <div class="sec-tag" style="margin-bottom:16px">Start Today</div>
+    <h2 class="fd">Your transformation<br>starts <span class="gt">right here.</span></h2>
+    <p>Walk in for a free trial. No commitment, no pressure. Just show up and experience the difference.</p>
+    <div class="cta-btns">
+      <a href="#" class="btn-w" style="background:var(--accent);padding:18px 44px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        WhatsApp Us
+      </a>
+      <a href="#" class="btn-ghost" style="padding:18px 44px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3"/></svg>
+        Call Now
+      </a>
+    </div>
+    <div class="cta-info">
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Anna Nagar, Madurai</div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> 5 AM – 10 PM Daily</div>
+      <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3"/></svg> +91 XXXXX XXXXX</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-in">
+    <a href="#" class="foot-logo fd">IRON<span>FORGE</span></a>
+    <p class="foot-copy">© 2026 IronForge Gym. All rights reserved.</p>
+    <div class="foot-links">
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp</a>
+      <a href="#">Facebook</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Navbar scroll effect
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+</script>
+
+</body>
+</html>
